@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup4
 import requests, lxml
 import pandas as pd
 import streamlit as st
