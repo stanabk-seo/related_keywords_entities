@@ -58,11 +58,16 @@ try:
     search_keywords = []
     search_entities = []
 
+    n = 1
+
     for i in keyword_list:
         keyword = i.decode('utf-8')
         url = ('https://www.bing.com/search?q='+keyword+'&form=QBLH&sp=-1')
         response = requests.get(url, headers=headers).text
         soup = BeautifulSoup(response, 'lxml')
+
+        if n == 1:
+            st.write('Fetching data...')
 
         for related_search in soup.select('.b_rs ul li'):
             searches.append(related_search.text)
@@ -71,6 +76,11 @@ try:
         for entity in soup.select('.b_factrow a'):     
             entities.append(entity.text)
             search_entities.append(keyword)
+        
+        n = n+1
+        if n%5 == 0:
+            st.write(n," Keywords Completed...")
+            
 
     df1 = pd.DataFrame(searches)
     df1.columns = ['related_keywords']
@@ -98,7 +108,7 @@ try:
     st.write('Done!')
 
     st.download_button('Download Related Keywords', csv1, 'related_keywords.csv', 'text/csv')
-    st.download_button('Download Entities', csv2, 'related_keywords.csv', 'text/csv')
+    st.download_button('Download Entities', csv2, 'related_entities.csv', 'text/csv')
 
 except:
     print('Ingore none type error')
