@@ -78,7 +78,7 @@ try:
             search_entities.append(keyword)
         
         n = n+1
-        if n%5 == 0:
+        if n%100 == 0:
             st.write(n," Keywords Completed...")
             
 
